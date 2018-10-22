@@ -1,0 +1,24 @@
+.CardButton {
+  align-items: center;
+  background-color: rgba(177, 0, 61, 0);
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  letter-spacing: 0.08929em;
+  line-height: 2.25rem;
+  margin-right: 8px;
+  min-width: 64px;
+  outline: none;
+  padding: 0 8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.15s all cubic-bezier(0.4, 0, 0.2, 1);
+}
+.CardButton:hover {
+  background-color: rgba(177, 0, 61, 0.1);
+}

@@ -1,0 +1,21 @@
+.Login {
+  margin: auto;
+  padding: 80px 0 16px 0;
+  width: 600px;
+}
+.Field {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 0 16px;
+}
+.Button {
+  margin: 16px;
+  font-size: 1rem;
+  border: 0;
+  align-self: flex-end;
+  background: #b1003d;
+  color: #ffffff;
+  padding: 12px 16px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
