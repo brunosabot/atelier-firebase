@@ -25,7 +25,7 @@ class Form extends React.Component {
 
   // Disabled while in @TODO
   // eslint-disable-next-line class-methods-use-this
-  submit() {
+  submit = () => {
     // @TODO: Upload file to server and register in database
   }
 
