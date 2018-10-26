@@ -2,7 +2,8 @@
 
 ## Créer son projet dans la console Firebase et l'explorer
 
-Pas de consignes, vous allez facilement découvrir par vous-même comment elle fonctionne.
+Vous pouvez créer votre projet sur https://console.firebase.google.com/
+Prenez un moment pour explorer l'interface.
 
 ## Installer les dependences NodeJS
 
@@ -16,7 +17,7 @@ L'application va utiliser plusieurs services firebase :
  - Realtime database,
  - L'hébergement de fichiers statiques.
 
-`npm install -g firebase-tools` ou `yarn global add firebase-tools` puis `firebase init`
+`npm install -g firebase-tools` ou `yarn global add firebase-tools` puis `firebase login` puis `firebase init`
 
 Prenez le temps de regarder les fichiers générés :
  - .firebaserc
@@ -48,15 +49,9 @@ Dans un premier temps, nous allons importer des données dans Realtime Database 
 }
 ```
 
-## Pour aller plus loin
-
-Pour creuser les fonctionnalités de Realtime Database, essayez de récupérer des données filtrées.
-
-Par exemple, je ne voudrais afficher que les memes favoris.
-
 ## Utilisation de Realtime Database
 
-Pour utiliser Realtime database, nous avons besoin d'instancier le module :
+Pour utiliser Realtime database, nous avons besoin d'instancier le module dans `src/routes/Home/List/index.jsx` :
 
 `firebase.database()`
 
@@ -66,6 +61,12 @@ Dans notre cas de figures, nous voulons tous les enfants de l'arbre *memes*, don
 Cette référence sert à de nombreuses choses, mais dans notre cas, nous allons devoir écouter ses changements avec `.on('value', callback)`.
 
 Cette évènement attend une fonction de callback et lui passera un snapshot, dont nous pouvons récupérer la valeur avec `.val()`.
+
+## Pour aller plus loin
+
+Pour creuser les fonctionnalités de Realtime Database, essayez de récupérer des données filtrées.
+
+Par exemple, je ne voudrais afficher que les memes favoris.
 
 # TP3 : S'autentifier
 
@@ -77,7 +78,7 @@ Dans cet exercice, nous allons simplement utiliser le mode email/mot de passe.
 
 Pour celà, commencez par créer votre compte depuis la console Firebase.
 
-Ensuite, vous pouvez utiliser la méthode `signInWithEmailAndPassword` du service `auth` pour effectuer la connexion.
+Ensuite, vous pouvez utiliser la méthode `signInWithEmailAndPassword` du service `auth` pour effectuer la connexion depuis le fichier `src/App/App.jsx`.
 
 ## Récupérer l'état de connexion de l'utilisateur
 
@@ -93,7 +94,9 @@ Si vous avez du temps, essayez donc d'utiliser les API tiers de connexion tels q
 
 ## Stocker le fichier
 
-La gestion des fichiers fonctionne de la même manière que la base de données, à l'exception que le service utilisé est `storage`
+La gestion des fichiers fonctionne de la même manière que la base de données, à l'exception que le service utilisé est `storage`.
+
+Nous allons modifier le fichier `src/routes/Admin/Form/index.jsx`.
 
 Pour uploader le fichier, nous avons besoin d'utiliser la méthode `put` qui permet d'enregistrer le fichier sur le serveur.
 
@@ -119,7 +122,7 @@ Si vous avez du temps, vous pouvez utiliser la tâche d'upload créer par le `pu
 
 Pour mettre en favori, vous avez juste à appliquez ce que vous savez déjà.
 
-Attention tout de même : `set` écrase les données, vous devrez utiliser la méthode `put`.
+Attention tout de même : `set` écrase les données, vous devrez utiliser la méthode `update`.
 
 ## Pour aller plus loin
 
@@ -137,7 +140,9 @@ Pour déployer l'application, vous avez juste à entrer la commande `firebase de
 
 ## Implémentation
 
-Dans l'application, nous allons utiliser le service `messaging` pour gérer les push notifications
+Dans l'application, nous allons utiliser le service `messaging` pour gérer les push notifications.
+
+L'implémentation se fera dans `src/components/functionnal/Navigation.jsx`.
 
 Pour commencer, on va configurer le service avec le certificat généré précédement. Pour cela, nous allons utiliser la méthode `usePublicVapidKey`
 
