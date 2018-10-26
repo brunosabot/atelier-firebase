@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import React from "react";
 import Card from "../../../components/ui/Card";
 import CardActions from "../../../components/ui/CardActions";
@@ -11,38 +12,32 @@ import Meme from "../../../components/ui/Meme";
 
 import styles from "./List.module.css";
 
-// id is not used while the function is @TODO
-// eslint-disable-next-line no-unused-vars
 const setFavorite = id => () => {
-  // @TODO: Set favorite
+  firebase
+    .database()
+    .ref(`memes/${id}`)
+    .update({
+      isFavorite: true
+    });
 };
 
 class List extends React.Component {
   state = { data: [] };
 
+  firebaseRef = null;
+
   componentDidMount() {
     this.loadData();
   }
 
+  componentWillUnmount() {
+    this.firebaseRef.off("value", this.firebaseCallback);
+  }
+
   loadData() {
-    // @TODO: Load data from Firebase's
-    this.setState({
-      data: {
-        "3a954410-1b30-409b-8f28-2a6e1c7c6a32": {
-          url: "https://i.imgflip.com/mqh2g.jpg",
-          title: "Welcome 2 da real world",
-          description:
-            "Je me souviens en fait, je sais que, grâce à ma propre vérité c'est juste une question d'awareness et c'est une sensation réelle qui se produit si on veut ! Mais ça, c'est uniquement lié au spirit.",
-          isFavorite: true
-        },
-        "6c46bf35-aacf-4a98-a181-7fe63ee53976": {
-          url: "http://m.memegen.com/rtofmq.jpg",
-          title: "It's so easy even I can do it",
-          description:
-            "Tu comprends, même si on frime comme on appelle ça en France... il y a de bonnes règles, de bonnes rules et cela même si les gens ne le savent pas ! Il y a un an, je t'aurais parlé de mes muscles.",
-          isFavorite: false
-        }
-      }
+    this.firebaseRef = firebase.database().ref("/memes");
+    this.firebaseCallback = this.firebaseRef.on("value", snap => {
+      this.setState({ data: snap.val() });
     });
   }
 

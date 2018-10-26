@@ -1,4 +1,8 @@
 import React from "react";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+import "firebase/storage";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import Admin from "../routes/Admin";
@@ -6,7 +10,14 @@ import Home from "../routes/Home";
 import Navigation from "../components/functionnal/Navigation";
 import AppContext from "./AppContext";
 
-// @TODO: Initialize Firebase
+firebase.initializeApp({
+  apiKey: "AIzaSyCaIP7KRvO3VWH63Rp0n8-GSCZ4AOhyTKw",
+  authDomain: "atelier-firebase-f9bdf.firebaseapp.com",
+  databaseURL: "https://atelier-firebase-f9bdf.firebaseio.com",
+  projectId: "atelier-firebase-f9bdf",
+  storageBucket: "atelier-firebase-f9bdf.appspot.com",
+  messagingSenderId: "348306530936"
+});
 
 class App extends React.Component {
   state = {
@@ -14,13 +25,22 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    // Check if user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ isAuthenticated: true });
+      } else {
+        this.setState({ isAuthenticated: false });
+      }
+    });
   }
 
-  // Disabled while in @TODO
-  // eslint-disable-next-line class-methods-use-this
   doLogUser(email, password) {
-    // @TODO Handle auth user
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(() => {
+        this.setState({ isAuthenticated: false });
+      });
   }
 
   render() {

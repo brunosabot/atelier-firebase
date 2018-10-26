@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import Card from "../../../components/ui/Card";
 import styles from "./Form.module.css";
 import Input from "../../../components/ui/Input";
@@ -23,11 +24,27 @@ class Form extends React.Component {
     this.setState({ file: e.target.files[0] });
   };
 
-  // Disabled while in @TODO
-  // eslint-disable-next-line class-methods-use-this
   submit = () => {
-    // @TODO: Upload file to server and register in database
-  }
+    const { description, file, title } = this.state;
+
+    const storageRef = firebase.storage().ref();
+    const memeRef = storageRef.child(`memes/${file.name}`);
+    const uploadTask = memeRef.put(file);
+
+    uploadTask.then(() => memeRef.getDownloadURL()).then(url => {
+      this.firebaseRef = firebase
+        .database()
+        .ref("/memes")
+        .push();
+
+      this.firebaseRef.set({
+        title,
+        description,
+        url,
+        isFavorite: false
+      });
+    });
+  };
 
   render() {
     const { description, title } = this.state;
